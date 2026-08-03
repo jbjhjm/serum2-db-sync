@@ -8,6 +8,11 @@ import { Task, type TaskFn } from './tasks/types.js';
 import { Globals } from './lib/globals.js';
 import { Command } from 'commander';
 import { Backup } from './lib/backup.js';
+import { Logger } from './lib/logger.js';
+import { fileURLToPath } from 'url';
+import { dirname } from 'path';
+
+const __dirname = dirname(fileURLToPath(import.meta.url));
 
 const userHomeDir = homedir();
 const program = new Command();
@@ -62,7 +67,11 @@ const dbCopyFilePath = await Backup.create(dbFilePath, Globals.FileExt)
 if(existsSync(dbCopyFilePath+'-wal')) await fs.unlink(dbCopyFilePath+'-wal');
 if(existsSync(dbCopyFilePath+'-shm')) await fs.unlink(dbCopyFilePath+'-shm');
 
-const taskHandler = (await import('./tasks/'+task+'.ts').then(mod=>mod.default)) as TaskFn;
+
+const taskFilePath = './tasks/' + task + '.ts';
+const resolved = path.resolve(__dirname, taskFilePath);
+if(!existsSync(resolved)) Logger.fatal('Task not found: '+task)
+const taskHandler = (await import(taskFilePath).then(mod=>mod.default)) as TaskFn;
 
 await taskHandler({
 	dryRun,
