@@ -1,0 +1,5 @@
+onlyBuiltDependencies:
+  - sqlite3
+  - '@mongodb-js/zstd'
+  - esbuild
+  - unrs-resolver
