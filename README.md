@@ -9,9 +9,9 @@ __WARNING: Consider this an untested prototype. While backup mechanisms are part
 
 ## Installation
 
-Install NodeJS 20 or greater.
-Install pnpm.
-Clone the repo.
-Install repo using `pnpm i`.
-Execute `pnpm start` for interactive CLI.
+- Install NodeJS 20 or greater.
+- Install pnpm.
+- Clone the repo.
+- Install repo using `pnpm i`.
+- Execute `pnpm start` for interactive CLI.
 
